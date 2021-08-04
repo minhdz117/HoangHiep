@@ -68,9 +68,18 @@ app.get('/ok', (req, res) => {
         res.render('login')
     }
 })
-app.get('/table',(req,res) =>{
+app.get('/table/:msv',(req,res) =>{
     if (req.isAuthenticated()){
-        res.send(table)
+        res.send(table.find((sinhvien)=>{
+            return sinhvien.msv==req.params.msv
+        }))
+    }else{
+        res.send('error')
+    }
+})
+app.get('/download/:msv',(req,res)=>{
+    if (req.isAuthenticated()){
+        res.download('hocphi.pdf')
     }else{
         res.send('error')
     }
